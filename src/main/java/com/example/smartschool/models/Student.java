@@ -26,13 +26,11 @@ public class Student {
     @Column(name = "parent_phone")
     private String parentPhone;
 
+    @Column(name = "grade_id")
+    private String gradeId;
+
 //    1:M => student : mark
 //    @OneToMany(mappedBy = "student")
 //    @JsonIgnore
 //    private Set<Mark> marks;
-
-//    M:1 => grade : student
-//    @ManyToOne
-//    @JoinColumn(name = "grade_id")
-//    private Grade grade;
 }
