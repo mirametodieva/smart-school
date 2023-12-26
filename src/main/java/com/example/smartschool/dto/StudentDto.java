@@ -1,4 +1,5 @@
 package com.example.smartschool.dto;
 
-public class StudentDto {
+public record StudentDto(String firstName, String lastName, Integer studentNum,
+                         String parentPhone, String gradeId) {
 }
