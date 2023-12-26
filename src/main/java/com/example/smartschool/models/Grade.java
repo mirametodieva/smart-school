@@ -33,7 +33,7 @@ public class Grade {
 //    private Set<Teacher> teachers;
 
 //    1:M => grade : students
-//    @OneToMany(mappedBy = "grade")
+//    @OneToMany(mappedBy = "grade_id")
 //    @JsonIgnore
 //    private Set<Student> students;
 }
