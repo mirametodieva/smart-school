@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 
 @Entity
 @Table(name = "student")
@@ -26,11 +28,12 @@ public class Student {
     @Column(name = "parent_phone")
     private String parentPhone;
 
-    @Column(name = "grade_id")
-    private String gradeId;
 
 //    1:M => student : mark
-//    @OneToMany(mappedBy = "student")
-//    @JsonIgnore
-//    private Set<Mark> marks;
+    @OneToMany(mappedBy = "studentMark")
+    private Set<Mark> marksStudent;
+
+    @ManyToOne
+    @JoinColumn(name = "grade_id")
+    private Grade gradeStudent;
 }
