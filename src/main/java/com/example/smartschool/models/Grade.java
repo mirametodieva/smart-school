@@ -21,14 +21,14 @@ public class Grade {
     private String name;
 
 //    M:M => grade : subject
-    @ManyToMany(mappedBy = "gradesS")
-    private Set<Subject> subjects;
+    @ManyToMany(mappedBy = "gradesSubject")
+    private Set<Subject> subjectsGrade;
 
 //    M:M => grade : teacher
-    @ManyToMany(mappedBy = "grades")
-    private Set<Teacher> teachers;
+    @ManyToMany(mappedBy = "gradesTeacher")
+    private Set<Teacher> teachersGrade;
 
 //    1:M => grade : students
-    @OneToMany(mappedBy = "grade")
-    private Set<Student> students;
+    @OneToMany(mappedBy = "gradeStudent")
+    private Set<Student> studentsGrade;
 }
