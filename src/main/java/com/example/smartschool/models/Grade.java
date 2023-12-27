@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 
 @Entity
 @Table(name = "grade")
@@ -19,21 +21,14 @@ public class Grade {
     private String name;
 
 //    M:M => grade : subject
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "grade_subject",
-//            joinColumns = @JoinColumn(name = "grade_id"),
-//            inverseJoinColumns = @JoinColumn(name = "subject_id"))
-//    private Set<Subject> subjects;
+    @ManyToMany(mappedBy = "gradesS")
+    private Set<Subject> subjects;
 
 //    M:M => grade : teacher
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "grade_teacher",
-//            joinColumns = @JoinColumn(name = "grade_id"),
-//            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-//    private Set<Teacher> teachers;
+    @ManyToMany(mappedBy = "grades")
+    private Set<Teacher> teachers;
 
 //    1:M => grade : students
-//    @OneToMany(mappedBy = "grade_id")
-//    @JsonIgnore
-//    private Set<Student> students;
+    @OneToMany(mappedBy = "grade")
+    private Set<Student> students;
 }
