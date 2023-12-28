@@ -17,7 +17,7 @@ public class Grade {
     @JsonIgnore
     private Long id;
 
-    @Column(name = "name")
+    @Column(unique = true,nullable = false, name = "name")
     private String name;
 
 //    M:M => grade : subject
