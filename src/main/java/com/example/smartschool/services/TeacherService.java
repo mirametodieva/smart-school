@@ -52,10 +52,10 @@ public class TeacherService {
         }
     }
 
-    public List<Teacher> getTeachersBySubjectName(SubjectDto dto)
+    public List<Teacher> getTeachersBySubjectName(String subjectName)
     {
-        String subjectName = dto.name().toLowerCase();
-        return teacherRepo.findTeachersBySubjectName(subjectName);
+        String subjectNameLowered = subjectName.toLowerCase();
+        return teacherRepo.findTeachersBySubjectName(subjectNameLowered);
     }
 
     @Transactional
@@ -75,7 +75,7 @@ public class TeacherService {
     }
 
     @Transactional
-    public void deleteTeacherById(long teacherId)
+    public void deleteTeacherByTeacherId(long teacherId)
     {
         teacherRepo.deleteById(teacherId);
     }
