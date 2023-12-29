@@ -42,13 +42,12 @@ public class TeacherService {
         return teacherRepo.findAll();
     }
 
-    public Teacher getTeacherByTeacherNum(Integer teacherNum)
-    {
+    public Teacher getTeacherByTeacherNum(Integer teacherNum) throws Exception {
         Optional<Teacher> teacherOptional = teacherRepo.findTeacherByTeacherNum(teacherNum);
         if (teacherOptional.isPresent()) {
             return teacherOptional.get();
         } else {
-            return null;
+            throw new Exception("Teacher not found! Check the given number!");
         }
     }
 

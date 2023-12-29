@@ -23,7 +23,7 @@ public class TeacherController {
     }
 
     @GetMapping("/fetch/teachers/{teacherNum}")
-    public Teacher fetchTeacherByNum(@PathVariable Integer teacherNum) {
+    public Teacher fetchTeacherByNum(@PathVariable Integer teacherNum) throws Exception {
         return teacherService.getTeacherByTeacherNum(teacherNum);
     }
 
