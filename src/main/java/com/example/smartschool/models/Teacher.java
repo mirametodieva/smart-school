@@ -23,7 +23,7 @@ public class Teacher {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "teacher_number")
+    @Column(unique = true, nullable = false, name = "teacher_number")
     private Integer teacherNum;
 
     @Column(name = "education")

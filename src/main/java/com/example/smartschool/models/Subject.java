@@ -15,7 +15,7 @@ public class Subject {
     @JsonIgnore
     private Long id;
 
-    @Column(name = "name")
+    @Column(unique = true, nullable = false, name = "name")
     private String name;
 
     //one-to-many relationship between the subject and the teachers teaching it
