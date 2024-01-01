@@ -38,20 +38,20 @@ public class TeacherController {
         return new ResponseEntity<>(savedInDb, HttpStatus.CREATED);
     }
 
-//    @PutMapping("/update/teachers/{teacherNum}/subject/{subjectName}")
-//    public ResponseEntity<?> updateTeacherSub(
-//            @PathVariable String subjectName,
-//            @PathVariable Integer teacherNum
-//    ) {
-//        teacherService.updateTeacherSubject(subjectName, teacherNum);
-//        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-//    }
+    @PutMapping("/update/teachers/{teacherNum}/subject/{subjectName}")
+    public ResponseEntity<?> updateTeacherSub(
+            @PathVariable String subjectName,
+            @PathVariable Integer teacherNum
+    ) {
+        teacherService.updateTeacherSubject(subjectName, teacherNum);
+        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+    }
 
 //        @PutMapping("/update/teachers/{teacherNum}/grades/{gradeName}/add")
 //    public ResponseEntity<?> updateTeacherAddGrade(
 //            @PathVariable Integer teacherNum,
 //            @PathVariable String gradeName
-//    ) {
+//    ) throws Exception {
 //        teacherService.addGradeToTeacher(teacherNum, gradeName);
 //        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
 //    }

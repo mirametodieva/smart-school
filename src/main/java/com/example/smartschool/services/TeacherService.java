@@ -6,6 +6,7 @@ import com.example.smartschool.mappers.TeacherMapper;
 import com.example.smartschool.models.Grade;
 import com.example.smartschool.models.Subject;
 import com.example.smartschool.models.Teacher;
+import com.example.smartschool.repositories.SubjectRepo;
 import com.example.smartschool.repositories.TeacherRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class TeacherService {
 
     private final TeacherRepo teacherRepo;
 //    private final GradeRepo gradeRepo;
-//    private final SubjectRepo subjectRepo;
+    private final SubjectRepo subjectRepo;
     private final TeacherMapper teacherMapper;
 
 //    public TeacherService(TeacherRepo teacherRepo,
@@ -86,11 +87,11 @@ public class TeacherService {
                 .ifPresent(teacher -> teacherRepo.deleteById(teacher.getId()));
     }
 
-//    @Transactional
-//    public void updateTeacherSubject(String subjectName, Integer teacherNum) {
-//        Subject subject = subjectRepo.findByName(subjectName).get(); //A method findByName should be added in SubjectRepo
-//        teacherRepo.updateSubject(subject, teacherNum);
-//    }
+    @Transactional
+    public void updateTeacherSubject(String subjectName, Integer teacherNum) {
+        Subject subject = subjectRepo.findSubjectBySubjectName(subjectName).get(); //A method findSubjectBySubjectName should be added in SubjectRepo
+        teacherRepo.updateSubject(subject, teacherNum);
+    }
 
 //    @Transactional
 //    public void addGradeToTeacher(Integer teacherNum, String gradeName) throws Exception {
