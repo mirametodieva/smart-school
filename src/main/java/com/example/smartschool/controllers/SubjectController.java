@@ -1,9 +1,7 @@
 package com.example.smartschool.controllers;
 
 import com.example.smartschool.dto.SubjectDto;
-import com.example.smartschool.dto.TeacherDto;
 import com.example.smartschool.models.Subject;
-import com.example.smartschool.models.Teacher;
 import com.example.smartschool.services.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -51,14 +49,14 @@ public class SubjectController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-//    @PutMapping("/update/subjects/{subjectName}/grades/{gradeName}/add")
-//    public ResponseEntity<?> updateSubjectAddGrade(
-//            @PathVariable String subjectName,
-//            @PathVariable String gradeName
-//    )  throws Exception  {
-//        subjectService.addGradeToSubject(subjectName, gradeName);
-//        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-//    }
+    @PutMapping("/update/subjects/{subjectName}/grades/{gradeName}/add")
+    public ResponseEntity<?> updateSubjectAddGrade(
+            @PathVariable String subjectName,
+            @PathVariable String gradeName
+    )  throws Exception  {
+        subjectService.addGradeToSubject(subjectName, gradeName);
+        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+    }
 
     @PutMapping("/update/subjects/{subjectName}/grades/{gradeName}/delete")
     public ResponseEntity<?> updateSubjectDeleteGrade(
@@ -72,12 +70,6 @@ public class SubjectController {
     @DeleteMapping("/delete/subjects/{subjectName}")
     public ResponseEntity<?> deleteSubjectBySubjectName(@PathVariable String subjectName) throws Exception {
         subjectService.deleteSubjectBySubjectName(subjectName);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-    }
-
-    @DeleteMapping("/delete/subjects/{subjectId}")
-    public ResponseEntity<?> deleteSubjectBySubjectId(@PathVariable long subjectId) throws Exception {
-        subjectService.deleteSubjectBySubjectId(subjectId);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 }

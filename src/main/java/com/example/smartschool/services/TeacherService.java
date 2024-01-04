@@ -6,6 +6,7 @@ import com.example.smartschool.mappers.TeacherMapper;
 import com.example.smartschool.models.Grade;
 import com.example.smartschool.models.Subject;
 import com.example.smartschool.models.Teacher;
+import com.example.smartschool.repositories.GradeRepo;
 import com.example.smartschool.repositories.SubjectRepo;
 import com.example.smartschool.repositories.TeacherRepo;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ import java.util.Optional;
 public class TeacherService {
 
     private final TeacherRepo teacherRepo;
-//    private final GradeRepo gradeRepo;
+    private final GradeRepo gradeRepo;
     private final SubjectRepo subjectRepo;
     private final TeacherMapper teacherMapper;
 
@@ -65,12 +66,6 @@ public class TeacherService {
     }
 
     @Transactional
-    public void deleteTeacherByTeacherId(long teacherId)
-    {
-        teacherRepo.deleteById(teacherId);
-    }
-
-    @Transactional
     public void deleteTeacherByTeacherNum(Integer teacherNum)
     {
         teacherRepo.findTeacherByTeacherNum(teacherNum)
@@ -83,22 +78,22 @@ public class TeacherService {
         teacherRepo.updateSubject(subject, teacherNum);
     }
 
-//    @Transactional
-//    public void addGradeToTeacher(Integer teacherNum, String gradeName) throws Exception {
-//        Optional<Teacher> teacherOptional = teacherRepo.findTeacherByTeacherNum(teacherNum);
-//        Optional<Grade> gradeOptional = gradeRepo.findGradeByGradeName(gradeName);//The method findGradeByGradeName should be written in GradeRepo
-//
-//        if (teacherOptional.isPresent()&&gradeOptional.isPresent()) {
-//            Teacher teacher = teacherOptional.get();
-//            Grade grade=gradeOptional.get();
-//
-//            teacher.getGradesTeacher().add(grade);
-//
-//            teacherRepo.saveAndFlush(teacher);
-//        } else {
-//            throw new Exception("Teacher/Grade not found! Check the given info!");
-//        }
-//    }
+    @Transactional
+    public void addGradeToTeacher(Integer teacherNum, String gradeName) throws Exception {
+        Optional<Teacher> teacherOptional = teacherRepo.findTeacherByTeacherNum(teacherNum);
+        Optional<Grade> gradeOptional = gradeRepo.findGradeByGradeName(gradeName);
+
+        if (teacherOptional.isPresent()&&gradeOptional.isPresent()) {
+            Teacher teacher = teacherOptional.get();
+            Grade grade=gradeOptional.get();
+
+            teacher.getGradesTeacher().add(grade);
+
+            teacherRepo.saveAndFlush(teacher);
+        } else {
+            throw new Exception("Teacher/Grade not found! Check the given info!");
+        }
+    }
 
     @Transactional
     public void deleteGradeFromTeacher(Integer teacherNum, String gradeName) throws Exception {

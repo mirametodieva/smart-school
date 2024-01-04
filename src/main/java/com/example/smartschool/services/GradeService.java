@@ -33,11 +33,6 @@ public class GradeService {
         return gradeRepo.findAll();
     }
 
-    public Grade getGradeById(Long id) throws Exception {
-        return gradeRepo.findById(id)
-                .orElseThrow(() -> new Exception("Grade not found with id: " + id));
-    }
-
     public Grade getGradeByName(String gradeName) throws Exception {
         return gradeRepo.findGradeByGradeName(gradeName)
                 .orElseThrow(() -> new Exception("Grade not found with grade number: " + gradeName));
@@ -60,11 +55,6 @@ public class GradeService {
             log.info("You are creating a new grade");
             return gradeRepo.saveAndFlush(gradeMapper.convertDtoToEntity(dto, null));
         }
-    }
-
-    @Transactional
-    public void deleteGradeByGradeId(long gradeId) {
-        gradeRepo.deleteById(gradeId);
     }
 
     @Transactional

@@ -2,7 +2,9 @@ package com.example.smartschool.services;
 
 import com.example.smartschool.dto.StudentDto;
 import com.example.smartschool.mappers.StudentMapper;
+import com.example.smartschool.models.Grade;
 import com.example.smartschool.models.Student;
+import com.example.smartschool.repositories.GradeRepo;
 import com.example.smartschool.repositories.StudentRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +20,11 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class StudentService {
     private final StudentRepo studentRepo;
+    private final GradeRepo gradeRepo;
     private final StudentMapper studentMapper;
 
     public List<Student> getAllStudents() {
         return studentRepo.findAll();
-    }
-
-    public Student getStudentById(Long id) throws Exception {
-        return studentRepo.findById(id)
-                .orElseThrow(() -> new Exception("Student not found with id: " + id));
     }
 
     public Student getStudentByStudentNum(Integer studentNum) throws Exception {
@@ -37,11 +35,6 @@ public class StudentService {
     public List<Student> getStudentsByGradeName(String gradeName)
     {
         return studentRepo.findStudentsByGradeName(gradeName.toLowerCase());
-    }
-
-    public List<Student> getStudentsByGradeId(Long gradeId)
-    {
-        return studentRepo.findStudentsByGradeId(gradeId);
     }
 
     @Transactional
@@ -61,12 +54,6 @@ public class StudentService {
     }
 
     @Transactional
-    public void deleteStudentById(long id)
-    {
-        studentRepo.deleteById(id);
-    }
-
-    @Transactional
     public void deleteStudentByStudentNum(Integer studentNum)
     {
         studentRepo.findStudentByStudentNum(studentNum)
@@ -74,11 +61,13 @@ public class StudentService {
     }
 
     @Transactional
-    public void updateStudentGrade(Long gradeId, Integer studentNum) {
-//        Grade grade = gradeRepo.findGradeByGradeName(gradeName).getId();}
-        studentRepo.findStudentByStudentNum(studentNum)
-                .ifPresent(student -> studentRepo.updateGrade(gradeId, student.getId()));
-        log.info("Updated grade for student with student number {}", studentNum);
+    public void updateStudentGrade(String gradeName, Integer studentNum) {
+        Optional<Grade> grade = gradeRepo.findGradeByGradeName(gradeName);
+        if(grade.isPresent()){
+            studentRepo.findStudentByStudentNum(studentNum)
+                    .ifPresent(student -> studentRepo.updateGrade(grade.get().getId(), student.getId()));
+            log.info("Updated grade for student with student number {}", studentNum);
+        }
     }
 
 //    @Transactional

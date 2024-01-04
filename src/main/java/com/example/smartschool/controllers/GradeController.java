@@ -3,7 +3,6 @@ package com.example.smartschool.controllers;
 import com.example.smartschool.dto.GradeDto;
 import com.example.smartschool.models.Grade;
 import com.example.smartschool.services.GradeService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,18 +27,18 @@ public class GradeController {
         return gradeService.getGradeByName(gradeName);
     }
 
-//    @GetMapping("/fetch/grades/{subjectName}")
-//    public List<Grade> fetchGradesBySubjectName(@PathVariable String subjectName) throws Exception {
-//        return gradeService.getGradesBySubjectName(subjectName);
-//    }
-
     @PostMapping("/save/grades")
     public ResponseEntity<?> saveGrade(@RequestBody GradeDto dto) {
         Grade savedInDb = gradeService.saveGrade(dto);
         return new ResponseEntity<>(savedInDb, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/grades/{gradesName}/students/{studentNum}/add")
+    @GetMapping("/fetch/grades/subjects/{subjectName}")
+    public List<Grade> fetchGradesBySubjectName(@PathVariable String subjectName) throws Exception {
+        return gradeService.getGradesBySubjectName(subjectName);
+    }
+
+    @PutMapping("/update/grades/{gradeName}/students/{studentNum}/add")
     public ResponseEntity<?> updateGradeAddStudent(
             @PathVariable String gradeName,
             @PathVariable Integer studentNum
@@ -48,7 +47,7 @@ public class GradeController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/grades/{gradesName}/students/{studentNum}/delete")
+    @PutMapping("/update/grades/{gradeName}/students/{studentNum}/delete")
     public ResponseEntity<?> updateGradeDeleteStudent(
             @PathVariable String gradeName,
             @PathVariable Integer studentNum
@@ -57,7 +56,7 @@ public class GradeController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/grades/{gradesName}/teachers/{teacherNum}/add")
+    @PutMapping("/update/grades/{gradeName}/teachers/{teacherNum}/add")
     public ResponseEntity<?> updateGradeAddTeacher(
             @PathVariable String gradeName,
             @PathVariable Integer teacherNum
@@ -66,7 +65,7 @@ public class GradeController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/grades/{gradesName}/teachers/{teacherNum}/delete")
+    @PutMapping("/update/grades/{gradeName}/teachers/{teacherNum}/delete")
     public ResponseEntity<?> updateGradeDeleteTeacher(
             @PathVariable String gradeName,
             @PathVariable Integer teacherNum
@@ -75,7 +74,7 @@ public class GradeController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/grades/{gradesName}/subjects/{subjectName}/add")
+    @PutMapping("/update/grades/{gradeName}/subjects/{subjectName}/add")
     public ResponseEntity<?> updateGradeAddSubject(
             @PathVariable String gradeName,
             @PathVariable String subjectName
@@ -84,7 +83,7 @@ public class GradeController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/grades/{gradesName}/subjects/{subjectName}/delete")
+    @PutMapping("/update/grades/{gradeName}/subjects/{subjectName}/delete")
     public ResponseEntity<?> updateGradeDeleteSubject(
             @PathVariable String gradeName,
             @PathVariable String subjectName
@@ -93,15 +92,9 @@ public class GradeController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/delete/grades/{gradesName}")
+    @DeleteMapping("/delete/grades/{gradeName}")
     public ResponseEntity<?> deleteGradeByGradeName(@PathVariable String gradeName) throws Exception {
         gradeService.deleteGradeByGradeName(gradeName);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-    }
-
-    @DeleteMapping("/delete/grades/{gradesId}")
-    public ResponseEntity<?> deleteGradeByGradeId(@PathVariable long gradeId) throws Exception {
-        gradeService.deleteGradeByGradeId(gradeId);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 }

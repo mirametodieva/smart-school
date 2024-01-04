@@ -47,16 +47,16 @@ public class TeacherController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-//        @PutMapping("/update/teachers/{teacherNum}/grades/{gradeName}/add")
-//    public ResponseEntity<?> updateTeacherAddGrade(
-//            @PathVariable Integer teacherNum,
-//            @PathVariable String gradeName
-//    ) throws Exception {
-//        teacherService.addGradeToTeacher(teacherNum, gradeName);
-//        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-//    }
+    @PutMapping("/update/teachers/{teacherNum}/grades/{gradeName}/add")
+    public ResponseEntity<?> updateTeacherAddGrade(
+            @PathVariable Integer teacherNum,
+            @PathVariable String gradeName
+    ) throws Exception {
+        teacherService.addGradeToTeacher(teacherNum, gradeName);
+        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+    }
 
-        @PutMapping("/update/teachers/{teacherNum}/grades/{gradeName}/delete")
+    @PutMapping("/update/teachers/{teacherNum}/grades/{gradeName}/delete")
     public ResponseEntity<?> updateTeacherDeleteGrade(
             @PathVariable Integer teacherNum,
             @PathVariable String gradeName
@@ -65,17 +65,9 @@ public class TeacherController {
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-        @DeleteMapping("/delete/teachers/{teacherNum}")
-        public ResponseEntity<?> deleteTeacherByTeacherNum(@PathVariable Integer teacherNum) throws Exception {
-            teacherService.deleteTeacherByTeacherNum(teacherNum);
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-        }
-
-    @DeleteMapping("/delete/teachers/{teacherId}")
-    public ResponseEntity<?> deleteTeacherByTeacherId(@PathVariable long teacherId) throws Exception {
-        teacherService.deleteTeacherByTeacherId(teacherId);
+    @DeleteMapping("/delete/teachers/{teacherNum}")
+    public ResponseEntity<?> deleteTeacherByTeacherNum(@PathVariable Integer teacherNum) throws Exception {
+        teacherService.deleteTeacherByTeacherNum(teacherNum);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
-
-
 }

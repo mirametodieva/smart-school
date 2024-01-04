@@ -3,7 +3,6 @@ package com.example.smartschool.controllers;
 import com.example.smartschool.dto.StudentDto;
 import com.example.smartschool.models.Student;
 import com.example.smartschool.services.StudentService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,14 +23,9 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-//    @GetMapping("/fetch/students/{studentId}")
-//    public Student fetchStudentByStudentId(@PathVariable Long studentId) throws Exception {
-//        return studentService.getStudentById(studentId);
-//    }
-
     @GetMapping("/fetch/students/{studentNum}")
-    public Student fetchStudentByStudentNum(@PathVariable Integer studentsNum) throws Exception {
-        return studentService.getStudentByStudentNum(studentsNum);
+    public Student fetchStudentByStudentNum(@PathVariable Integer studentNum) throws Exception {
+        return studentService.getStudentByStudentNum(studentNum);
     }
 
     @GetMapping("/fetch/students/{gradeName}")
@@ -39,30 +33,19 @@ public class StudentController {
         return studentService.getStudentsByGradeName(gradeName);
     }
 
-//    @GetMapping("/fetch/students/{gradeId}")
-//    public List<Student> fetchStudentsByGradeId(@PathVariable Long gradeId) {
-//        return studentService.getStudentsByGradeId(gradeId);
-//    }
-
     @PostMapping("/students")
     public ResponseEntity<?> saveStudent(@RequestBody StudentDto dto) {
         Student savedStudent = studentService.saveStudent(dto);
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/students/{studentNum}/subject/{gradeId}")
+    @PutMapping("/update/students/{studentNum}/subject/{gradeName}")
     public ResponseEntity<?> updateStudentGrade(
-            @PathVariable Long gradeId,
+            @PathVariable String gradeName,
             @PathVariable Integer studentNum
     ) {
-        studentService.updateStudentGrade(gradeId, studentNum);
+        studentService.updateStudentGrade(gradeName, studentNum);
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-    }
-
-    @DeleteMapping("/delete/students/{studentId}")
-    public ResponseEntity<?> deleteStudentById(@PathVariable Long studentId) throws Exception {
-        studentService.deleteStudentById(studentId);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/delete/students/{studentNum}")

@@ -2,8 +2,10 @@ package com.example.smartschool.services;
 
 import com.example.smartschool.dto.SubjectDto;
 import com.example.smartschool.mappers.SubjectMapper;
+import com.example.smartschool.models.Grade;
 import com.example.smartschool.models.Subject;
 import com.example.smartschool.models.Teacher;
+import com.example.smartschool.repositories.GradeRepo;
 import com.example.smartschool.repositories.SubjectRepo;
 import com.example.smartschool.repositories.TeacherRepo;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +22,8 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class SubjectService {
     private final SubjectRepo subjectRepo;
-        private final TeacherRepo teacherRepo;
-//    private final GradeRepo gradeRepo;
+    private final TeacherRepo teacherRepo;
+    private final GradeRepo gradeRepo;
     private final SubjectMapper subjectMapper;
 
     public List<Subject> getAllSubjects() {
@@ -49,12 +51,6 @@ public class SubjectService {
         }
         Subject subject = subjectMapper.convertDtoToEntity(dto, id);
         return subjectRepo.saveAndFlush(subject);
-    }
-
-    @Transactional
-    public void deleteSubjectBySubjectId(long subjectId)
-    {
-        subjectRepo.deleteById(subjectId);
     }
 
     @Transactional
@@ -96,23 +92,23 @@ public class SubjectService {
         }
     }
 
-//    @Transactional
-//    public void addGradeToSubject(String subjectName, String gradeName) throws Exception {
-//        Optional<Subject> subjectOptional = subjectRepo.findSubjectBySubjectName(subjectName);
-//        Optional<Grade> gradeOptional = gradeRepo.findGradeByGradeName(gradeName);//The method findGradeByGradeName should be written in GradeRepo
-//
-//        if (subjectOptional.isPresent()&&gradeOptional.isPresent()) {
-//            Subject subject = subjectOptional.get();
-//            Grade grade=gradeOptional.get();
-//
-//            subject.getGradesSubject().add(grade);
-//
-//            subjectRepo.saveAndFlush(subject);
-//        } else {
-//            throw new Exception("Subject/Grade not found! Check the given info!");
-//        }
-//    }
-//
+    @Transactional
+    public void addGradeToSubject(String subjectName, String gradeName) throws Exception {
+        Optional<Subject> subjectOptional = subjectRepo.findSubjectBySubjectName(subjectName);
+        Optional<Grade> gradeOptional = gradeRepo.findGradeByGradeName(gradeName);
+
+        if (subjectOptional.isPresent()&&gradeOptional.isPresent()) {
+            Subject subject = subjectOptional.get();
+            Grade grade=gradeOptional.get();
+
+            subject.getGradesSubject().add(grade);
+
+            subjectRepo.saveAndFlush(subject);
+        } else {
+            throw new Exception("Subject/Grade not found! Check the given info!");
+        }
+    }
+
     @Transactional
     public void deleteGradeFromSubject(String subjectName, String gradeName) throws Exception {
         Optional<Subject> subjectOptional = subjectRepo.findSubjectBySubjectName(subjectName);
