@@ -68,7 +68,7 @@ public class SubjectController {
     }
 
     @DeleteMapping("/delete/subjects/{subjectName}")
-    public ResponseEntity<?> deleteSubjectBySubjectName(@PathVariable String subjectName) throws Exception {
+    public ResponseEntity<?> deleteSubjectBySubjectName(@PathVariable String subjectName) {
         subjectService.deleteSubjectBySubjectName(subjectName);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }

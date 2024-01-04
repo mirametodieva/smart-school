@@ -16,6 +16,6 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
     List<Student> findStudentsByGradeStudent(Grade grade);
 
     @Modifying
-    @Query("UPDATE Student SET gradeStudent = :gradeId WHERE id = :studentId")
-    void updateGrade(Long grade, Long studentId);
+    @Query("UPDATE Student SET gradeStudent = :grade WHERE id = :studentId")
+    void updateGrade(Grade grade, Long studentId);
 }
