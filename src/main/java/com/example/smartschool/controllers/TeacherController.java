@@ -66,7 +66,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/delete/teachers/{teacherNum}")
-    public ResponseEntity<?> deleteTeacherByTeacherNum(@PathVariable Integer teacherNum) throws Exception {
+    public ResponseEntity<?> deleteTeacherByTeacherNum(@PathVariable Integer teacherNum)  {
         teacherService.deleteTeacherByTeacherNum(teacherNum);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
