@@ -1,0 +1,1 @@
+INSERT INTO mark(value, subjectName) VALUES ('A', 'Math');
