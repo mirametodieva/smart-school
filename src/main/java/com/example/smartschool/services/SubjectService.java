@@ -31,16 +31,21 @@ public class SubjectService {
         return subjectRepo.findAll();
     }
 
-    public List<Subject> getSubjectsByGradeName(String gradeName)
+    public List<Subject> getSubjectsByGradeName(String gradeName) throws Exception
     {
         String gradeNameLowered = gradeName.toLowerCase();
-        return subjectRepo.findSubjectsByGradeName(gradeNameLowered);
+        Optional<Grade> grade = gradeRepo.findGradeByName(gradeNameLowered);
+        if(grade.isPresent()){
+            return subjectRepo.findSubjectsByGradesSubject(grade.get());
+        }else{
+            throw new Exception("grade not found! Check the given name!");
+        }
     }
 
     @Transactional
     public Subject saveSubject(SubjectDto dto)
     {
-        Optional<Subject> optionalSubject = subjectRepo.findSubjectBySubjectName(dto.name());
+        Optional<Subject> optionalSubject = subjectRepo.findSubjectByName(dto.name());
         Long id;
         if(optionalSubject.isPresent()) {
             id = optionalSubject.get().getId();
@@ -56,13 +61,13 @@ public class SubjectService {
     @Transactional
     public void deleteSubjectBySubjectName(String subjectName)
     {
-        subjectRepo.findSubjectBySubjectName(subjectName)
+        subjectRepo.findSubjectByName(subjectName)
                 .ifPresent(subject -> subjectRepo.deleteById(subject.getId()));
     }
 
     @Transactional
     public void addTeacherToSubject(String subjectName, Integer teacherNum) throws Exception {
-        Optional<Subject> subjectOptional = subjectRepo.findSubjectBySubjectName(subjectName);
+        Optional<Subject> subjectOptional = subjectRepo.findSubjectByName(subjectName);
         Optional<Teacher> teacherOptional = teacherRepo.findTeacherByTeacherNum(teacherNum);//The method findTeacherByTeacherNum should be written in TeacherRepo
 
         if (teacherOptional.isPresent()&&subjectOptional.isPresent()) {
@@ -79,7 +84,7 @@ public class SubjectService {
 
     @Transactional
     public void deleteTeacherFromSubject(String subjectName, Integer teacherNum) throws Exception {
-        Optional<Subject> subjectOptional = subjectRepo.findSubjectBySubjectName(subjectName);
+        Optional<Subject> subjectOptional = subjectRepo.findSubjectByName(subjectName);
 
         if (subjectOptional.isPresent()) {
             Subject subject = subjectOptional.get();
@@ -94,8 +99,8 @@ public class SubjectService {
 
     @Transactional
     public void addGradeToSubject(String subjectName, String gradeName) throws Exception {
-        Optional<Subject> subjectOptional = subjectRepo.findSubjectBySubjectName(subjectName);
-        Optional<Grade> gradeOptional = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Subject> subjectOptional = subjectRepo.findSubjectByName(subjectName);
+        Optional<Grade> gradeOptional = gradeRepo.findGradeByName(gradeName);
 
         if (subjectOptional.isPresent()&&gradeOptional.isPresent()) {
             Subject subject = subjectOptional.get();
@@ -111,7 +116,7 @@ public class SubjectService {
 
     @Transactional
     public void deleteGradeFromSubject(String subjectName, String gradeName) throws Exception {
-        Optional<Subject> subjectOptional = subjectRepo.findSubjectBySubjectName(subjectName);
+        Optional<Subject> subjectOptional = subjectRepo.findSubjectByName(subjectName);
 
         if (subjectOptional.isPresent()) {
             Subject subject = subjectOptional.get();

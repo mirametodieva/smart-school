@@ -3,6 +3,7 @@ package com.example.smartschool.controllers;
 import com.example.smartschool.dto.GradeDto;
 import com.example.smartschool.models.Grade;
 import com.example.smartschool.services.GradeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class GradeController {
     private final GradeService gradeService;
-
-    public GradeController(GradeService gradeService) {
-        this.gradeService = gradeService;
-    }
 
     @GetMapping("/fetch/grades")
     public List<Grade> fetchGrades() {

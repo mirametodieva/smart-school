@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface TeacherRepo extends JpaRepository<Teacher, Long> {
     Optional<Teacher> findTeacherByTeacherNum(Integer num);
-    List<Teacher> findTeachersBySubjectName(String subjectName);
+    List<Teacher> findTeachersBySubjectTeacher(Subject subject);
 
     @Modifying
     @Query("UPDATE Teacher SET subjectTeacher = :subject WHERE teacherNum = :teacherNum")

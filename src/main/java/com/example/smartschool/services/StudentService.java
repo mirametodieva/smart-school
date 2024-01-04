@@ -32,9 +32,14 @@ public class StudentService {
                 .orElseThrow(() -> new Exception("Student not found with student number: " + studentNum));
     }
 
-    public List<Student> getStudentsByGradeName(String gradeName)
+    public List<Student> getStudentsByGradeName(String gradeName) throws  Exception
     {
-        return studentRepo.findStudentsByGradeName(gradeName.toLowerCase());
+        Optional<Grade> grade = gradeRepo.findGradeByName(gradeName.toLowerCase());
+        if(grade.isPresent()){
+            return studentRepo.findStudentsByGradeStudent(grade.get());
+        }else{
+            throw new Exception("Check the grade name.");
+        }
     }
 
     @Transactional
@@ -62,7 +67,7 @@ public class StudentService {
 
     @Transactional
     public void updateStudentGrade(String gradeName, Integer studentNum) {
-        Optional<Grade> grade = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> grade = gradeRepo.findGradeByName(gradeName);
         if(grade.isPresent()){
             studentRepo.findStudentByStudentNum(studentNum)
                     .ifPresent(student -> studentRepo.updateGrade(grade.get().getId(), student.getId()));

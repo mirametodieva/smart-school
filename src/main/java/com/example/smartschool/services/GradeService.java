@@ -34,18 +34,24 @@ public class GradeService {
     }
 
     public Grade getGradeByName(String gradeName) throws Exception {
-        return gradeRepo.findGradeByGradeName(gradeName)
+        return gradeRepo.findGradeByName(gradeName)
                 .orElseThrow(() -> new Exception("Grade not found with grade number: " + gradeName));
     }
 
-    public List<Grade> getGradesBySubjectName(String subjectName) {
-        return gradeRepo.findGradesBySubjectName(subjectName.toLowerCase());
+    public List<Grade> getGradesBySubjectName(String subjectName) throws Exception {
+        Optional<Subject> subject = subjectRepo.findSubjectByName(subjectName.toLowerCase());
+        if(subject.isPresent()){
+            return gradeRepo.findGradesBySubjectsGrade(subject.get());
+        }
+        else{
+            throw new Exception("Check subject name.");
+        }
     }
 
     @Transactional
     public Grade saveGrade(GradeDto dto) {
         String gradeName = dto.name();
-        Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> existingGrade = gradeRepo.findGradeByName(gradeName);
 
         if (existingGrade.isPresent()) {
             Long id = existingGrade.get().getId();
@@ -59,13 +65,13 @@ public class GradeService {
 
     @Transactional
     public void deleteGradeByGradeName(String gradeName) {
-        gradeRepo.findGradeByGradeName(gradeName)
+        gradeRepo.findGradeByName(gradeName)
                 .ifPresent(grade -> gradeRepo.deleteById(grade.getId()));
     }
 
     @Transactional
     public void addStudentToGrade(String gradeName, Integer studentNum) throws Exception {
-        Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> existingGrade = gradeRepo.findGradeByName(gradeName);
         Optional<Student> existingStudent = studentRepo.findStudentByStudentNum(studentNum);
 
         if (existingStudent.isPresent() && existingGrade.isPresent()) {
@@ -82,7 +88,7 @@ public class GradeService {
 
     @Transactional
     public void deleteStudentFromGrade(String gradeName, Integer studentNum) throws Exception {
-        Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> existingGrade = gradeRepo.findGradeByName(gradeName);
 
         if (existingGrade.isPresent()) {
             Grade grade = existingGrade.get();
@@ -97,7 +103,7 @@ public class GradeService {
 
     @Transactional
     public void addTeacherToGrade(String gradeName, Integer teacherNum) throws Exception {
-        Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> existingGrade = gradeRepo.findGradeByName(gradeName);
         Optional<Teacher> existingTeacher = teacherRepo.findTeacherByTeacherNum(teacherNum);
 
         if (existingTeacher.isPresent() && existingGrade.isPresent()) {
@@ -114,7 +120,7 @@ public class GradeService {
 
     @Transactional
     public void deleteTeacherFromGrade(String gradeName, Integer teacherNum) throws Exception {
-        Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> existingGrade = gradeRepo.findGradeByName(gradeName);
 
         if (existingGrade.isPresent()) {
             Grade grade = existingGrade.get();
@@ -129,8 +135,8 @@ public class GradeService {
 
     @Transactional
     public void addSubjectToGrade(String gradeName, String subjectName) throws Exception {
-        Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
-        Optional<Subject> existingSubject = subjectRepo.findSubjectBySubjectName(subjectName);
+        Optional<Grade> existingGrade = gradeRepo.findGradeByName(gradeName);
+        Optional<Subject> existingSubject = subjectRepo.findSubjectByName(subjectName);
 
         if (existingSubject.isPresent() && existingGrade.isPresent()) {
             Subject subject = existingSubject.get();
@@ -146,7 +152,7 @@ public class GradeService {
 
     @Transactional
     public void deleteSubjectFromGrade(String gradeName, String subjectName) throws Exception {
-        Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> existingGrade = gradeRepo.findGradeByName(gradeName);
 
         if (existingGrade.isPresent()) {
             Grade grade = existingGrade.get();

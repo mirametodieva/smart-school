@@ -15,14 +15,15 @@ enum MarkValue {
 @Table(name = "grade")
 @Data
 public class Mark {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
 
-    @Column(name="value")
     @Enumerated(EnumType.STRING)
-    private String value;
+    @Column(name="value")
+    private MarkValue value;
 
     @Column(name = "subject_name")
     private String subjectName;

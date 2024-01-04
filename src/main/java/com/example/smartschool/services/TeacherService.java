@@ -43,10 +43,15 @@ public class TeacherService {
         }
     }
 
-    public List<Teacher> getTeachersBySubjectName(String subjectName)
+    public List<Teacher> getTeachersBySubjectName(String subjectName) throws Exception
     {
         String subjectNameLowered = subjectName.toLowerCase();
-        return teacherRepo.findTeachersBySubjectName(subjectNameLowered);
+        Optional<Subject> subject = subjectRepo.findSubjectByName(subjectNameLowered);
+        if(subject.isPresent()){
+            return teacherRepo.findTeachersBySubjectTeacher(subject.get());
+        }else{
+            throw new Exception("Subject not found! Check the given name!");
+        }
     }
 
     @Transactional
@@ -74,14 +79,14 @@ public class TeacherService {
 
     @Transactional
     public void updateTeacherSubject(String subjectName, Integer teacherNum) {
-        Subject subject = subjectRepo.findSubjectBySubjectName(subjectName).get(); //A method findSubjectBySubjectName should be added in SubjectRepo
+        Subject subject = subjectRepo.findSubjectByName(subjectName).get(); //A method findSubjectBySubjectName should be added in SubjectRepo
         teacherRepo.updateSubject(subject, teacherNum);
     }
 
     @Transactional
     public void addGradeToTeacher(Integer teacherNum, String gradeName) throws Exception {
         Optional<Teacher> teacherOptional = teacherRepo.findTeacherByTeacherNum(teacherNum);
-        Optional<Grade> gradeOptional = gradeRepo.findGradeByGradeName(gradeName);
+        Optional<Grade> gradeOptional = gradeRepo.findGradeByName(gradeName);
 
         if (teacherOptional.isPresent()&&gradeOptional.isPresent()) {
             Teacher teacher = teacherOptional.get();

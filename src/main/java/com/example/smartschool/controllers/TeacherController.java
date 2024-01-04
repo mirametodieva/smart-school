@@ -28,7 +28,7 @@ public class TeacherController {
     }
 
     @GetMapping("/fetch/teachers/{subjectName}")
-    public List<Teacher> fetchTeachersBySubjectName(@PathVariable String subjectName) {
+    public List<Teacher> fetchTeachersBySubjectName(@PathVariable String subjectName) throws Exception {
         return teacherService.getTeachersBySubjectName(subjectName);
     }
 

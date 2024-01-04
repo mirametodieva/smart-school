@@ -21,7 +21,7 @@ public class SubjectController {
     }
 
     @GetMapping("/fetch/subjects/{gradeName}")
-    public List<Subject> fetchSubjectsByGradeName(@PathVariable String gradeName) {
+    public List<Subject> fetchSubjectsByGradeName(@PathVariable String gradeName) throws Exception {
         return subjectService.getSubjectsByGradeName(gradeName);
     }
 

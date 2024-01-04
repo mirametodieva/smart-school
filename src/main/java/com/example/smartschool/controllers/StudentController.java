@@ -3,6 +3,7 @@ package com.example.smartschool.controllers;
 import com.example.smartschool.dto.StudentDto;
 import com.example.smartschool.models.Student;
 import com.example.smartschool.services.StudentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class StudentController {
 
     private final StudentService studentService;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
 
     @GetMapping("/fetch/students")
     public List<Student> fetchStudents() {
@@ -29,7 +28,7 @@ public class StudentController {
     }
 
     @GetMapping("/fetch/students/{gradeName}")
-    public List<Student> fetchStudentsByGradeName(@PathVariable String gradeName) {
+    public List<Student> fetchStudentsByGradeName(@PathVariable String gradeName) throws Exception {
         return studentService.getStudentsByGradeName(gradeName);
     }
 
