@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class GradeService {
     private final GradeRepo gradeRepo;
@@ -57,7 +56,7 @@ public class GradeService {
 
     @Transactional
     public Grade saveGrade(GradeDto dto) {
-        String gradeName = dto.getGradeName();
+        String gradeName = dto.name();
         Optional<Grade> existingGrade = gradeRepo.findGradeByGradeName(gradeName);
 
         if (existingGrade.isPresent()) {
@@ -169,7 +168,7 @@ public class GradeService {
         if (existingGrade.isPresent()) {
             Grade grade = existingGrade.get();
 
-            grade.getSubjectsGrade().removeIf(subject -> subject.getSubjectName().equals(subjectName));
+            grade.getSubjectsGrade().removeIf(subject -> subject.getName().equals(subjectName));
 
             gradeRepo.saveAndFlush(grade);
         } else {

@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class StudentService {
     private final StudentRepo studentRepo;
@@ -53,7 +52,7 @@ public class StudentService {
     @Transactional
     public Student saveStudent(StudentDto dto)
     {
-        Integer studentNum = dto.getStudentNum();
+        Integer studentNum = dto.studentNum();
         Optional<Student> existingStudent = studentRepo.findStudentByStudentNum(studentNum);
 
         if (existingStudent.isPresent()) {
