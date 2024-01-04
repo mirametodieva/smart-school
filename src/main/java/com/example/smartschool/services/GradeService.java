@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class GradeService {
     private final GradeRepo gradeRepo;
@@ -27,14 +28,6 @@ public class GradeService {
     private final TeacherRepo teacherRepo;
     private final SubjectRepo subjectRepo;
     private final GradeMapper gradeMapper;
-
-    public GradeService(GradeRepo gradeRepo, StudentRepo studentRepo, TeacherRepo teacherRepo, SubjectRepo subjectRepo, GradeMapper gradeMapper) {
-        this.gradeRepo = gradeRepo;
-        this.studentRepo = studentRepo;
-        this.teacherRepo = teacherRepo;
-        this.subjectRepo = subjectRepo;
-        this.gradeMapper = gradeMapper;
-    }
 
     public List<Grade> getAllGrades() {
         return gradeRepo.findAll();

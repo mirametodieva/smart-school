@@ -14,16 +14,11 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class StudentService {
     private final StudentRepo studentRepo;
     private final StudentMapper studentMapper;
-
-
-    public StudentService(StudentRepo studentRepo, StudentMapper studentMapper) {
-        this.studentRepo = studentRepo;
-        this.studentMapper = studentMapper;
-    }
 
     public List<Student> getAllStudents() {
         return studentRepo.findAll();

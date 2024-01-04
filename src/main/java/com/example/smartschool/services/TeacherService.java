@@ -28,16 +28,6 @@ public class TeacherService {
     private final SubjectRepo subjectRepo;
     private final TeacherMapper teacherMapper;
 
-//    public TeacherService(TeacherRepo teacherRepo,
-//                          GradeRepo gradeRepo, MarkRepo markRepo,SubjectRepo subjectRepo, TeacherMapper teacherMapper)
-//    {
-//        this.teacherRepo = teacherRepo;
-//        this.gradeRepo = gradeRepo;
-//        this.markRepo=markRepo;
-//        this.subjectRepo=subjectRepo;
-//        this.teacherMapper=teacherMapper;
-//    }
-
     public List<Teacher> getAllTeachers() {
         //System.out.println("\u001B[32m" + " " + Thread.currentThread().getName());
         return teacherRepo.findAll();
