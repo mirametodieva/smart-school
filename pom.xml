@@ -76,6 +76,11 @@
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.23</version> <!-- Use the latest version available -->
+		</dependency>
 
 	</dependencies>
 
@@ -95,5 +100,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
