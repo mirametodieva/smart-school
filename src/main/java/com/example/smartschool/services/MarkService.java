@@ -27,7 +27,7 @@ public class MarkService {
     public List<Mark> getMarkByTeacherNum(Integer teacherNum) throws Exception {
         Optional<Teacher> teacherOptional = teacherRepo.findTeacherByTeacherNum(teacherNum);
         if (teacherOptional.isPresent()) {
-            return markRepo.findMarksByTeacherNum(teacherNum);
+            return markRepo.findMarksByTeacherMark(teacherOptional.get());
         } else {
             throw new Exception("Teacher not found! Check the given number!");
         }
@@ -36,7 +36,7 @@ public class MarkService {
     public List<Mark> getMarkByStudentNum(Integer studentNum) throws Exception {
         Optional<Student> studentOptional = studentRepo.findStudentByStudentNum(studentNum);
         if (studentOptional.isPresent()) {
-            return markRepo.findMarksByStudentNum(studentNum);
+            return markRepo.findMarksByStudentMark(studentOptional.get());
         } else {
             throw new Exception("Student not found! Check the given number!");
         }
