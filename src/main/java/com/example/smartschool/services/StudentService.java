@@ -1,10 +1,14 @@
 package com.example.smartschool.services;
 
+import com.example.smartschool.dto.MarkDto;
 import com.example.smartschool.dto.StudentDto;
+import com.example.smartschool.mappers.MarkMapper;
 import com.example.smartschool.mappers.StudentMapper;
 import com.example.smartschool.models.Grade;
+import com.example.smartschool.models.Mark;
 import com.example.smartschool.models.Student;
 import com.example.smartschool.repositories.GradeRepo;
+import com.example.smartschool.repositories.MarkRepo;
 import com.example.smartschool.repositories.StudentRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +26,8 @@ public class StudentService {
     private final StudentRepo studentRepo;
     private final GradeRepo gradeRepo;
     private final StudentMapper studentMapper;
+    private final MarkMapper markMapper;
+    private final MarkRepo markRepo;
 
     public List<Student> getAllStudents() {
         return studentRepo.findAll();
@@ -65,20 +71,24 @@ public class StudentService {
         Optional<Grade> grade = gradeRepo.findGradeByGradeName(gradeName);
         if(grade.isPresent()){
             studentRepo.findStudentByStudentNum(studentNum)
-                    .ifPresent(student -> studentRepo.updateGrade(grade.get().getId(), student.getId()));
+                    .ifPresent(student -> studentRepo.updateGrade(grade.get(), student.getId()));
             log.info("Updated grade for student with student number {}", studentNum);
         }
     }
 
-//    @Transactional
-//    public Student saveMarkForStudent(Long studentId, MarkDto markDto) {
-//        Optional<Student> student = studentRepo.findById(studentId);
-//
-//        Mark mark = markMapper.convertDtoToEntity(markDto);
-//        mark.setStudentMark(student);
-//        markRepo.saveAndFlush(mark);
-//        student.getMarksStudent().add(mark);
-//
-//        return studentRepo.saveAndFlush(student);
-//    }
+    @Transactional
+    public void saveMarkForStudent(Long studentId, MarkDto markDto) throws Exception {
+        Optional<Student> studentOptional = studentRepo.findById(studentId);
+
+        if(studentOptional.isPresent()) {
+            Student student=studentOptional.get();
+            Mark mark = markMapper.convertDtoToEntity(markDto, null);
+            mark.setStudentMark(student);
+            markRepo.saveAndFlush(mark);
+            student.getMarksStudent().add(mark);
+            studentRepo.saveAndFlush(student);
+        }
+        else
+            throw new Exception("Student not found! Check the given info!");
+    }
 }
