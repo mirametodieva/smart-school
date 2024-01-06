@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface MarkMapper {
     @Mapping(target = "value", source = "dto.value")
     @Mapping(target = "subjectName", source = "dto.subjectName")
