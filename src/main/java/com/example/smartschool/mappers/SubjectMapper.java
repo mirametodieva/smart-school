@@ -8,6 +8,6 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface SubjectMapper {
-    @Mapping(target = "name", source = "name")
+    @Mapping(target = "name", source = "dto.name")
     Subject convertDtoToEntity(SubjectDto dto, Long id);
 }

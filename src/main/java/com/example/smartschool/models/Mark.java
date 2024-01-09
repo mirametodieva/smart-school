@@ -7,12 +7,8 @@ import lombok.*;
 
 import java.util.Set;
 
-enum MarkValue {
-    A, B, C, D, F
-}
-
 @Entity
-@Table(name = "grade")
+@Table(name = "mark")
 @Data
 public class Mark {
 

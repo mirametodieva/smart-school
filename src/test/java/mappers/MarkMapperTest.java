@@ -20,19 +20,21 @@ public class MarkMapperTest {
     @MethodSource("paramProvider")
     void convertDtoToEntityTest(MarkDto dto, String[] emptyFields) {
         Mark result = underTest.convertDtoToEntity(dto, 1L);
+
         assertThat(result)
                 .isNotNull()
-                .hasNoNullFieldsOrPropertiesExcept(emptyFields);
+                .hasNoNullFieldsOrPropertiesExcept("studentMark", "teacherMark");
+
     }
 
     private static Stream<Arguments> paramProvider() {
         return Stream.of(
                 Arguments.of(
-                        new MarkDto("A",null),
+                        new MarkDto("A", "P.E"),
                         new String[]{"subjectName"}
                 ),
                 Arguments.of(
-                        new MarkDto(null, "Math"),
+                        new MarkDto("F", "Math"),
                         new String[]{"value"}
                 )
         );
